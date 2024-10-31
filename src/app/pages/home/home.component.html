@@ -1,3 +1,15 @@
-<h2>Olympic games app</h2>
-<hr />
+<h1>Medals per Country</h1>
+<div class="olympics-info-container">
+    <article class="numbers-container">
+        <h2>Number of JOs</h2>
+        <p>10</p>
+    </article>
+    <article class="numbers-container">
+        <h2>Number of countries</h2>
+        <p>5</p>
+    </article>
+</div>
+
+<!-- Ajout du graphique via le composant -->
+<app-olympic-pie-chart></app-olympic-pie-chart>
 <p>{{ (olympics$ | async)?.length }} data loaded</p>

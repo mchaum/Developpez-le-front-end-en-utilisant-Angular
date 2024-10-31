@@ -2,18 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+// Import du modèle OlympicCountry, et par défaut Participation qui est compris dedans //
+import { OlympicCountry } from '../models/Olympic'; 
 
 @Injectable({
   providedIn: 'root',
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  private olympics$ = new BehaviorSubject<any>(undefined);
+  // Ajout de OlympicCountry à la place de "any" //
+  private olympics$ = new BehaviorSubject<OlympicCountry[] | null | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
+    // Ajout de OlympicCountry à la place de "any" //
+    return this.http.get<OlympicCountry[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
