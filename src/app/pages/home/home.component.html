@@ -2,11 +2,11 @@
 <div class="olympics-info-container">
     <article class="numbers-container">
         <h2>Number of JOs</h2>
-        <p>10</p>
+        <p>{{ totalParticipations }}</p>
     </article>
     <article class="numbers-container">
         <h2>Number of countries</h2>
-        <p>5</p>
+        <p>{{ (olympics$ | async)?.length }}</p>
     </article>
 </div>
 

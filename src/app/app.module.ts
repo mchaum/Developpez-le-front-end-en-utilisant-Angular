@@ -5,13 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { NgChartsModule } from 'ng2-charts';
 import { OlympicPieChartComponent } from './components/pie-chart/pie-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MedalChartComponent } from './components/medal-chart/medal-chart.component';
+import { CountryDetailComponent } from './pages/country-detail/country-detail.component';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, NotFoundComponent],
-  // Ajout de NgChartsModule pour pouvoir utiliser les components de ng2-charts dans l'app et créer le diagramme de type "pie" //
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgChartsModule, OlympicPieChartComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent, OlympicPieChartComponent, MedalChartComponent, CountryDetailComponent],
+  // Ajout de NgxChartsModule pour pouvoir utiliser les components de ngx-charts dans l'app et créer le diagramme de type "pie" //
+  imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

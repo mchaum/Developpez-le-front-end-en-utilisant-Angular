@@ -10,7 +10,7 @@ import { OlympicCountry } from '../models/Olympic';
 })
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
-  // Ajout de OlympicCountry à la place de "any" //
+  // Ajout de OlympicCountry à la place de "any" : permet de typer et stocker les données sur le modèle créé //
   private olympics$ = new BehaviorSubject<OlympicCountry[] | null | undefined>(undefined);
 
   constructor(private http: HttpClient) {}
@@ -29,6 +29,7 @@ export class OlympicService {
     );
   }
 
+  // Retourne un Observable pour permettre aux composants de s'abonner aux données olympiques //
   getOlympics() {
     return this.olympics$.asObservable();
   }

@@ -1,0 +1,26 @@
+<!-- Safe navigation operator : Permet de s'assurer que le contenu s'affiche uniquement si country a été défini correctement -->
+<div *ngIf="country">
+    <h1>{{ country!.country }}</h1>
+    <div class="olympics-info-container">
+      <article class="numbers-container">
+        <h2>Number of entries</h2>
+          <p>{{ totalParticipations }}</p>
+      </article>
+
+      <article class="numbers-container">
+        <h2>Total number medals</h2>
+          <p>{{ totalMedals }}</p>
+      </article> 
+    
+      <article class="numbers-container">
+        <h2>Total number of athletes</h2>
+          <p>{{ totalAthletes }}</p>
+      </article>
+    </div>
+    
+    <!-- Graphique -->
+    <app-medal-chart [country]="country"></app-medal-chart>
+    
+    <a routerLink="/">Retour à la page d'accueil</a>
+  </div>
+  

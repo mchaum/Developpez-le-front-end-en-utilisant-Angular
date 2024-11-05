@@ -1,45 +1,53 @@
-// pie-chart.component.ts
 import { Component, OnInit } from '@angular/core';
 import { OlympicService } from '../../core/services/olympic.service';
 import { OlympicCountry } from '../../core/models/Olympic';
-import { ChartData } from 'chart.js'; 
-import { NgChartsModule } from 'ng2-charts';
+import { Router } from '@angular/router';
 
 @Component({
-  standalone: true,
   selector: 'app-olympic-pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss'],
-  imports: [NgChartsModule],
+  styleUrls: ['./pie-chart.component.scss']
 })
 export class OlympicPieChartComponent implements OnInit {
-  public pieChartLabels: string[] = [];
-  public pieChartData: ChartData<'pie'>;
-  public pieChartType: 'pie' = 'pie';
+  countries: OlympicCountry[] = [];
+  pieChartData: { name: string; value: number }[] = []; // Nom (du pays) & Valeur (nbre de médailles) //
 
-  constructor(private olympicService: OlympicService) {
-    this.pieChartData = {
-      labels: [],
-      datasets: [{ data: [] }],
-    };
-  }
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    this.olympicService.getOlympics().subscribe((data) => {
+    // Récupération les données lors de l'initialisation //
+    this.olympicService.getOlympics().subscribe(data => {
       if (data) {
-        this.prepareChartData(data);
+        this.countries = data;
+        this.preparePieChartData();
       }
     });
   }
 
-  private prepareChartData(olympicCountries: OlympicCountry[]): void {
-    this.pieChartLabels = olympicCountries.map(country => country.country);
-    const medalsData = olympicCountries.map(country =>
-      country.participations.reduce((sum, participation) => sum + participation.medalsCount, 0)
-    );
+  preparePieChartData(): void {
+    const medalCounts: { [key: string]: number } = {};
 
-    this.pieChartData.labels = this.pieChartLabels;
-    this.pieChartData.datasets[0].data = medalsData;
+    // Calcul du nombre total de médailles pour chaque pays //
+    this.countries.forEach(country => {
+      const totalMedals = country.participations.reduce((sum, participation) => sum + participation.medalsCount, 0);
+      medalCounts[country.country] = totalMedals;
+    });
+
+    // Formater les données pour le pie chart //
+    this.pieChartData = Object.keys(medalCounts).map(key => ({
+      name: key,
+      value: medalCounts[key]
+    }));
+  }
+
+  // Création d'un évènement quand on clique sur un pays sur le diagramme //
+  onSelect(event: { name: string; value: number }): void {
+    const selectedCountryName = event.name;
+    const selectedCountry = this.countries.find(c => c.country === selectedCountryName);
+  
+    if (selectedCountry) {
+      // Redirection vers la page de détails du pays, créée en fonction de leur ID //
+      this.router.navigate(['/country', selectedCountry.id]);
+    }
   }
 }
-
