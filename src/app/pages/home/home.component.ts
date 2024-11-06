@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { filter, Observable, of } from 'rxjs';
+import { filter, Observable, of, Subscription } from 'rxjs';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { OlympicCountry } from 'src/app/core/models/Olympic';
 
@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   public olympics$: Observable<OlympicCountry[]> = of([]);
   country: OlympicCountry | undefined;
   totalParticipations: number = 0;
+  private subscription: Subscription | null = null;
 
   constructor(private olympicService: OlympicService) {}
 
@@ -35,6 +36,13 @@ export class HomeComponent implements OnInit {
         this.totalParticipations = uniqueYears.size;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    // Unsubsribe l'obervable pour éviter les fuites de mémoire //
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

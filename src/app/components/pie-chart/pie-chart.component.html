@@ -1,6 +1,7 @@
-<div class="pie-chart-container">
+<div #containerRef class="pie-chart-container">
     <ngx-charts-pie-chart
       [results]="pieChartData"
+      [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
       [labels]="true"
       (select)="onSelect($event)">
     </ngx-charts-pie-chart>

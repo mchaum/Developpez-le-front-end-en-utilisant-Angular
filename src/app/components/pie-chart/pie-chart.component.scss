@@ -3,3 +3,23 @@
     height: 500px;
     margin: 0 auto;
 }
+
+::ng-deep ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+    .tooltip-caret.position-top {
+      border-top-color: #4a818d;
+    }
+  
+    background-color: #4a818d;
+    color: #fff;
+  }
+
+@media (max-width: 767.98px) {
+    .pie-chart-container {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        height: auto;
+        margin-top: 0;
+        justify-content: center;
+    }
+}

@@ -7,9 +7,8 @@ import { OlympicCountry } from '../../core/models/Olympic';
   styleUrls: ['./medal-chart.component.scss']
 })
 export class MedalChartComponent implements OnChanges {
-  @Input() country!: OlympicCountry;
+  @Input() country!: OlympicCountry; // country reçoit OlympicCountry du composant parent //
   medalData: { name: string; series: { name: string; value: number }[] }[] = [];
-
 
   ngOnChanges(): void {
     this.prepareMedalData();
@@ -18,6 +17,7 @@ export class MedalChartComponent implements OnChanges {
   prepareMedalData(): void {
     if (this.country && this.country.participations) {
       this.medalData = [
+        // On construit le tableau année / nbre de médailles pour le graphique //
         {
           name: this.country.country,
           series: this.country.participations.map(participation => ({
