@@ -21,13 +21,11 @@ export class HomeComponent implements OnInit {
     this.olympics$ = this.olympicService.getOlympics().pipe(
       filter((countries): countries is OlympicCountry[] => !!countries)
     );
-    // Abonnement pour calculer le nombre total de JO uniques //
     this.olympics$.subscribe((countries) => {
       if (countries) {
         const uniqueYears = new Set<number>(); // Set pour éliminer les doublons //
 
         countries.forEach((country) => {
-          // On ajoute chaque année unique au compte, puis on obtient un total //
           country.participations.forEach((participation) => {
             uniqueYears.add(participation.year);
           });
@@ -39,7 +37,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // Unsubsribe l'obervable pour éviter les fuites de mémoire //
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

@@ -14,7 +14,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NotFoundComponent, OlympicPieChartComponent, MedalChartComponent, CountryDetailComponent],
-  // Ajout de NgxChartsModule pour pouvoir utiliser les components de ngx-charts dans l'app et créer le diagramme de type "pie" //
   imports: [BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule, NgxChartsModule],
   providers: [],
   bootstrap: [AppComponent],

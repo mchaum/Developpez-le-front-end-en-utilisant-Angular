@@ -3,6 +3,7 @@ import { OlympicService } from '../../core/services/olympic.service';
 import { OlympicCountry } from '../../core/models/Olympic';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NotFoundComponent } from 'src/app/pages/not-found/not-found.component';
 
 @Component({
   selector: 'app-olympic-pie-chart',
@@ -17,7 +18,6 @@ export class OlympicPieChartComponent implements OnInit {
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
-    // Récupération des données (abonnement à l'observable) lors de l'initialisation //
     this.olympicService.getOlympics().subscribe(data => {
       if (data) {
         this.countries = data;
@@ -50,11 +50,12 @@ export class OlympicPieChartComponent implements OnInit {
     if (selectedCountry) {
       // Redirection vers la page de détails du pays, créée en fonction de leur ID //
       this.router.navigate(['/country', selectedCountry.id]);
+    } else {
+      this.router.navigate(['/not-found']);
     }
   }
 
   ngOnDestroy(): void {
-    // Unsubsribe l'obervable pour éviter les fuites de mémoire //
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

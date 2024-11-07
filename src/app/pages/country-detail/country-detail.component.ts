@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs'; 
 import { OlympicService } from '../../core/services/olympic.service';
 import { OlympicCountry } from '../../core/models/Olympic';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-country-detail',
@@ -16,7 +17,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   totalAthletes: number = 0;
   private subscription: Subscription | undefined;
 
-  constructor(private route: ActivatedRoute, private olympicService: OlympicService) {} // ActivatedRoute = pour accéder aux informations sur la route actuelle //
+  constructor(private route: ActivatedRoute, private router: Router, private olympicService: OlympicService) {} // ActivatedRoute = pour accéder aux informations sur la route actuelle //
 
   ngOnInit(): void {
     // On récupère l'ID du pays à partir de l'URL via ActivatedRoute //
@@ -31,7 +32,7 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
         if (this.country) {
           this.calculateCountryStats();
         } else {
-          console.error(`Country with ID ${countryId} not found.`);
+          this.router.navigate(['/not-found']);
         }
       } else {
         console.log('En attente des données...');
@@ -49,7 +50,6 @@ export class CountryDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Unsubsribe l'obervable pour éviter les fuites de mémoire //
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
